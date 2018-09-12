@@ -4,42 +4,45 @@
 #include <vector>
 
 #include "Object.hpp"
+#include "InputHandler.hpp"
 
-namespace SDLEngine {
 
-	class Engine {
-	public:
-		Engine();
+class Engine {
+public:
+	Engine();
 
-		bool init(std::string title, int xPos, int yPos, int width, int height, Uint32 windowFlags);
-		bool isRunning() { return m_isRunning; };
+	bool init(std::string title, int xPos, int yPos, int width, int height, Uint32 windowFlags);
+	bool isRunning() { return m_isRunning; };
 
-		void handleEvent();
-		void update();
-		void render();
+	void handleEvent();
+	void update();
+	void render();
 
-		void quit();
+	void addObj(SDLObject* obj) { m_objects.push_back(obj); }
 
-		SDL_Renderer* getRenderer() const { return m_renderer; }
+	void quit();
 
-		std::string getError();
-	private:
-		bool m_isRunning;
-		int m_screenWidth;
-		int m_screenHeight;
-		Uint32 m_startTime;
+	SDL_Renderer* getRenderer() const { return m_renderer; }
+	InputHandler* getInputHandler() const { return m_inputHandler; }
 
-		Uint32 m_diffTime;
+	std::string getError();
+private:
+	bool m_isRunning;
+	int m_screenWidth;
+	int m_screenHeight;
+	Uint32 m_startTime;
 
-		std::string m_errorMsg;
+	Uint32 m_diffTime;
 
-		Uint32* m_pixels;
+	std::string m_errorMsg;
 
-		SDL_Event m_event;
-		SDL_Texture* m_texture;
-		SDL_Renderer* m_renderer;
-		SDL_Window* m_window;
+	Uint32* m_pixels;
 
-		std::vector<SDLObject*> m_objects;
-	};
-}
+	SDL_Event m_event;
+	SDL_Texture* m_texture;
+	SDL_Renderer* m_renderer;
+	SDL_Window* m_window;
+
+	std::vector<SDLObject*> m_objects;
+	InputHandler* m_inputHandler;
+};

@@ -150,12 +150,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Dot.cpp" />
     <ClCompile Include="Engine\Engine.cpp" />
+    <ClCompile Include="Engine\InputHandler.cpp" />
+    <ClCompile Include="Line.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Mandel.cpp" />
+    <ClCompile Include="Point.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Dot.hpp" />
+    <ClInclude Include="Engine\BaseObject.hpp" />
     <ClInclude Include="Engine\Engine.hpp" />
+    <ClInclude Include="Engine\InputHandler.hpp" />
     <ClInclude Include="Engine\Object.hpp" />
+    <ClInclude Include="Engine\Vector2.hpp" />
+    <ClInclude Include="Line.hpp" />
+    <ClInclude Include="Mandel.hpp" />
+    <ClInclude Include="Point.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

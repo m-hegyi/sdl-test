@@ -1,14 +1,14 @@
 #include "Engine.hpp"
 #include <iostream>
 
-using namespace SDLEngine;
-
 Engine::Engine() {
 	m_startTime = 0;
 	m_diffTime = 0;
+
+	m_inputHandler = new InputHandler();
 }
 
-bool SDLEngine::Engine::init(std::string title, int xPos, int yPos, int width, int height, Uint32 windowFlags) {
+bool Engine::init(std::string title, int xPos, int yPos, int width, int height, Uint32 windowFlags) {
 
 	m_screenWidth = width;
 	m_screenHeight = height;
@@ -49,14 +49,8 @@ bool SDLEngine::Engine::init(std::string title, int xPos, int yPos, int width, i
 }
 
 void Engine::handleEvent() {
-	while (SDL_PollEvent(&m_event)) {
-		switch (m_event.type) {
-		case SDL_QUIT:
-			m_isRunning = false;
-			break;
-		default:
-			break;
-		}
+	if (!m_inputHandler->update()) {
+		quit();
 	}
 }
 
@@ -71,7 +65,11 @@ void Engine::render() {
 	SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 255);
 	SDL_RenderClear(m_renderer);
 
-	for (int x = 0; x < m_screenWidth; x++) {
+	for (int i = 0; i < m_objects.size(); i++) {
+		m_objects[i]->render();
+	}
+
+	/*for (int x = 0; x < m_screenWidth; x++) {
 
 		Uint8 color = (int)((x + 1) * 255) / m_screenWidth;
 
@@ -84,13 +82,15 @@ void Engine::render() {
 	}
 	SDL_UpdateTexture(m_texture, NULL, m_pixels, (m_screenWidth * sizeof(Uint32)));
 
-	SDL_RenderCopy(m_renderer, m_texture, NULL, NULL);
+	SDL_RenderCopy(m_renderer, m_texture, NULL, NULL);*/
 
 	SDL_RenderPresent(m_renderer);
 }
 
 void Engine::quit() {
+	m_isRunning = false;
 	SDL_DestroyWindow(m_window);
 	SDL_DestroyRenderer(m_renderer);
 	SDL_Quit();
+	m_inputHandler->clean();
 }
